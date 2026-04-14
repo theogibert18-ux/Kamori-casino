@@ -41,11 +41,16 @@ module.exports = {
       ],
     });
 
-    // Autres salons — privés
-    const tutoriel = await guild.channels.create({ name: '📚・tutoriel-casino', type: ChannelType.GuildText, parent: category.id });
-    const guide = await guild.channels.create({ name: '📖・guide-gdc', type: ChannelType.GuildText, parent: category.id });
-    const chat = await guild.channels.create({ name: '💬・chat-gdc', type: ChannelType.GuildText, parent: category.id });
-    const casino = await guild.channels.create({ name: '🎰・casino', type: ChannelType.GuildText, parent: category.id });
+    // Permissions salons privés — uniquement rôle Casino
+    const privatePerms = [
+      { id: guild.roles.everyone, deny: [PermissionFlagsBits.ViewChannel] },
+      ...(casinoRole ? [{ id: casinoRole.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory] }] : []),
+    ];
+
+    const tutoriel = await guild.channels.create({ name: '📚・tutoriel-casino', type: ChannelType.GuildText, parent: category.id, permissionOverwrites: privatePerms });
+    const guide = await guild.channels.create({ name: '📖・guide-gdc', type: ChannelType.GuildText, parent: category.id, permissionOverwrites: privatePerms });
+    const chat = await guild.channels.create({ name: '💬・chat-gdc', type: ChannelType.GuildText, parent: category.id, permissionOverwrites: privatePerms });
+    const casino = await guild.channels.create({ name: '🎰・casino', type: ChannelType.GuildText, parent: category.id, permissionOverwrites: privatePerms });
 
     // Sauvegarde
     const config = load('casinoConfig');
