@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require('discord.js');
 const { getUser, saveUser } = require('../../utils/economy');
+const { recordGame } = require('../../utils/profile');
 
 module.exports = {
   name: 'coinflip',
@@ -16,6 +17,7 @@ module.exports = {
     const gagne = resultat === choix;
     if (gagne) user.balance += mise; else user.balance -= mise;
     saveUser(message.author.id, user);
+    recordGame(message.author.id, gagne, mise);
 
     message.reply({ embeds: [new EmbedBuilder().setColor(gagne ? 0x2ecc71 : 0xe74c3c).setTitle(`🪙 ${resultat === 'pile' ? '🟡 Pile' : '⚪ Face'}`).setDescription(`Tu as choisi **${choix}**, résultat : **${resultat}**\n\n${gagne ? `🎉 Gagné ! **+${mise}** 🪙` : `😔 Perdu ! **-${mise}** 🪙`}`).addFields({ name: 'Solde', value: `${user.balance.toLocaleString('fr-FR')} 🪙`, inline: true }).setFooter({ text: 'Kamori Casino' }).setTimestamp()] });
   },

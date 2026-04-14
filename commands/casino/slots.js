@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require('discord.js');
 const { getUser, saveUser } = require('../../utils/economy');
+const { recordGame } = require('../../utils/profile');
 
 const SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '⭐', '💎', '7️⃣'];
 const PAYOUTS = { '💎💎💎': 50, '7️⃣7️⃣7️⃣': 30, '⭐⭐⭐': 20, '🍇🍇🍇': 10, '🍊🍊🍊': 8, '🍋🍋🍋': 6, '🍒🍒🍒': 5 };
@@ -31,7 +32,10 @@ module.exports = {
     }
 
     saveUser(message.author.id, user);
+    recordGame(message.author.id, mult > 0, mult > 0 ? mise * mult : mise);
 
     message.reply({ embeds: [new EmbedBuilder().setColor(mult > 0 ? 0xffd700 : 0xe74c3c).setTitle('🎰 Machine à sous').setDescription(`┌──────────────┐\n│  ${rouleaux[0]} │ ${rouleaux[1]} │ ${rouleaux[2]}  │\n└──────────────┘\n\n${resultat}`).addFields({ name: 'Solde', value: `${user.balance.toLocaleString('fr-FR')} 🪙`, inline: true }).setFooter({ text: 'Kamori Casino' }).setTimestamp()] });
   },
 };
+
+// Note: recordGame est appelé après chaque partie
