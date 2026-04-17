@@ -15,20 +15,18 @@ const RANKS = [
   { name: '🌌 Transcendant', min: 200, color: 0xffd700 },
 ];
 
-const XP_PER_LEVEL = 100;
+const XP_PER_LEVEL = 150;
 
 function getProfile(userId) {
   const profiles = load('profiles');
   if (!profiles[userId]) {
     profiles[userId] = {
-      level: 1,
-      xp: 0,
-      totalGains: 0,
-      totalLosses: 0,
-      gamesPlayed: 0,
-      wins: 0,
-      losses: 0,
+      level: 1, xp: 0,
+      totalGains: 0, totalLosses: 0,
+      gamesPlayed: 0, wins: 0, losses: 0,
       clan: null,
+      badge: null,
+      title: null,
       createdAt: new Date().toISOString(),
     };
     save('profiles', profiles);
@@ -44,21 +42,17 @@ function saveProfile(userId, data) {
 
 function getRank(level) {
   let rank = RANKS[0];
-  for (const r of RANKS) {
-    if (level >= r.min) rank = r;
-  }
+  for (const r of RANKS) { if (level >= r.min) rank = r; }
   return rank;
 }
 
 function addXP(userId, amount) {
   const profile = getProfile(userId);
   profile.xp += amount;
-
   while (profile.xp >= XP_PER_LEVEL * profile.level) {
     profile.xp -= XP_PER_LEVEL * profile.level;
     profile.level++;
   }
-
   saveProfile(userId, profile);
   return profile;
 }
@@ -66,15 +60,8 @@ function addXP(userId, amount) {
 function recordGame(userId, won, amount) {
   const profile = getProfile(userId);
   profile.gamesPlayed++;
-  if (won) {
-    profile.wins++;
-    profile.totalGains += amount;
-    addXP(userId, Math.ceil(amount / 10));
-  } else {
-    profile.losses++;
-    profile.totalLosses += amount;
-    addXP(userId, 2);
-  }
+  if (won) { profile.wins++; profile.totalGains += amount; addXP(userId, Math.ceil(amount / 20)); }
+  else { profile.losses++; profile.totalLosses += amount; addXP(userId, 1); }
   saveProfile(userId, profile);
 }
 

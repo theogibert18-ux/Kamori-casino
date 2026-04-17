@@ -1,6 +1,7 @@
 const { handleBlackjack } = require('../commands/casino/blackjack');
 const { handleGiveaway } = require('../commands/casino/giveaway');
 const { handleTycoonButtons } = require('../commands/tycoon/tycoon');
+const { handleEntrepriseButtons } = require('../commands/economy/entreprise');
 const { getProfile, saveProfile, getRank, getXPBar } = require('../utils/profile');
 const { getUser } = require('../utils/economy');
 const { EmbedBuilder } = require('discord.js');
@@ -16,12 +17,9 @@ module.exports = {
     if (interaction.customId === 'casino_profil_create') {
       const guild = interaction.guild;
       const member = interaction.member;
-
-      // Donne le rôle Casino
       const casinoRole = guild.roles.cache.get(CASINO_ROLE_ID);
       if (casinoRole) await member.roles.add(casinoRole).catch(() => {});
 
-      // Crée le profil si inexistant
       const profile = getProfile(member.id);
       const economy = getUser(member.id);
       const rank = getRank(profile.level);
@@ -32,11 +30,7 @@ module.exports = {
         .setAuthor({ name: member.user.username, iconURL: member.user.displayAvatarURL() })
         .setThumbnail(member.user.displayAvatarURL({ size: 256 }))
         .setTitle(`${rank.name} — Profil créé !`)
-        .setDescription(
-          '✅ Ton profil Casino a été créé avec succès !\n' +
-          'Tu as maintenant accès à toute la catégorie Casino.\n\n' +
-          '```ansi\n\u001b[1;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m\n```'
-        )
+        .setDescription('✅ Ton profil Casino a été créé !\nTu as maintenant accès à toute la catégorie Casino.\n\n```ansi\n\u001b[1;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m\n```')
         .addFields(
           { name: '📊 Niveau', value: `\`${profile.level}\``, inline: true },
           { name: '🏅 Rang', value: rank.name, inline: true },
@@ -52,5 +46,6 @@ module.exports = {
     if (interaction.customId.startsWith('bj_')) await handleBlackjack(interaction);
     if (interaction.customId === 'giveaway_join') await handleGiveaway(interaction);
     if (interaction.customId.startsWith('tycoon_')) await handleTycoonButtons(interaction);
+    if (interaction.customId.startsWith('ent_')) await handleEntrepriseButtons(interaction);
   },
 };

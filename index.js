@@ -14,7 +14,7 @@ const client = new Client({
 });
 
 client.commands = new Collection();
-client.prefix = '+';
+client.prefix = '-';
 
 // Chargement des commandes
 const commandFolders = ['casino', 'tycoon', 'economy'];
@@ -23,8 +23,10 @@ for (const folder of commandFolders) {
   if (!fs.existsSync(folderPath)) continue;
   const files = fs.readdirSync(folderPath).filter(f => f.endsWith('.js'));
   for (const file of files) {
-    const command = require(path.join(folderPath, file));
-    if (command.name) client.commands.set(command.name, command);
+    const mod = require(path.join(folderPath, file));
+    if (mod.name) client.commands.set(mod.name, mod);
+    // Commandes exportées séparément (ex: work dans entreprise.js)
+    if (mod.work) client.commands.set(mod.work.name, mod.work);
   }
 }
 
