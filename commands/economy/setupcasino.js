@@ -108,26 +108,41 @@ module.exports = {
       .setColor(0x5865f2)
       .setTitle('📚 Tutoriel Casino Kamori')
       .setDescription(
-        '**🎰 Les jeux disponibles**\n\n' +
-        '`+slots <mise>` — Machine à sous\n' +
-        '> Mise minimum : 1 🪙 | Jackpot x50 avec 💎💎💎\n\n' +
-        '`+coinflip <pile/face> <mise>` — Pile ou face\n' +
-        '> 50% de chance de doubler ta mise\n\n' +
-        '`+blackjack <mise>` — Blackjack\n' +
-        '> Atteins 21 sans dépasser pour battre le croupier\n\n' +
-        '`+roulette <choix> <mise>` — Roulette\n' +
-        '> Mise sur rouge/noir/pair/impair ou un numéro (x36)\n\n' +
-        '**🏭 Tycoon**\n' +
-        '`+tycoon` — Ouvre ton empire et produis des ressources automatiquement\n\n' +
+        '**🎮 Jeux Casino**\n' +
+        '`-slots <mise>` — Machine à sous (Jackpot x50 avec 💎💎💎)\n' +
+        '`-coinflip <pile/face> <mise>` — Pile ou face\n' +
+        '`-blackjack <mise>` — Blackjack avec option de doubler\n' +
+        '`-roulette <rouge/noir/0-36> <mise>` — Roulette (numéro plein x36)\n\n' +
+        '**🎟️ Tirages**\n' +
+        '`-loterie acheter` — Ticket loterie (50 🪙)\n' +
+        '`-giveaway <durée> <nb> <prix>` — Lancer un giveaway\n\n' +
         '**💰 Économie**\n' +
-        '`+daily` — 100 🪙 par jour\n' +
-        '`+balance` — Voir ton solde\n' +
-        '`+transfert @user <montant>` — Envoyer des pièces\n' +
-        '`+leaderboard` — Top 10 des plus riches\n\n' +
+        '`-daily` — 100 🪙 par jour\n' +
+        '`-balance` — Voir ton solde\n' +
+        '`-transfert @user <montant>` — Envoyer des pièces\n' +
+        '`-leaderboard` — Top 10 des plus riches\n\n' +
+        '**🏦 Banque**\n' +
+        '`-banque déposer <montant>` — Sécuriser ses coins (+1%/jour)\n' +
+        '`-banque retirer <montant>` — Retirer ses fonds\n\n' +
+        '**🪙 Crypto KCoin**\n' +
+        '`-crypto` — Voir le marché en temps réel\n' +
+        '`-crypto acheter <montant>` — Investir en KCoins\n' +
+        '`-crypto vendre <quantité>` — Vendre ses KCoins\n\n' +
+        '**🏭 Tycoon**\n' +
+        '`-tycoon` — Gérer son empire industriel\n' +
+        '> Production lente, patience requise ! 😈\n\n' +
+        '**🏢 Entreprise**\n' +
+        '`-entreprise créer <nom>` — Créer son entreprise (5000 🪙)\n' +
+        '`-entreprise embaucher @user` — Embaucher des employés\n' +
+        '`-work` — Travailler pour une entreprise (cooldown 1h)\n\n' +
+        '**🛒 Shop**\n' +
+        '`-shop` — Badges, titres, boosts, tirages spéciaux\n' +
+        '> Tryhard requis pour les meilleures récompenses ! 💪\n\n' +
         '**👤 Profil & Clans**\n' +
-        '`+profil` — Voir ton profil complet\n' +
-        '`+clan créer <emoji> <nom>` — Créer un clan\n' +
-        '`+clan rejoindre <nom>` — Rejoindre un clan'
+        '`-profil` — Profil RPG complet (niveau, rang, stats)\n' +
+        '`-clan créer <emoji> <nom>` — Créer un clan\n' +
+        '`-clan rejoindre <nom>` — Rejoindre un clan\n\n' +
+        '`-helpall` — Liste complète de toutes les commandes'
       )
       .setFooter({ text: 'Kamori Casino • Tutoriel' })
       .setTimestamp();
